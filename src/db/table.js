@@ -187,9 +187,9 @@ class Base {
         return Promise.resolve();
     }
 
-    getManyToMany(name, storeName, id) {
+    getManyToOne(name, storeName, id) {
         if (!this.get(name)) {
-            let {text, values} = store.get(storeName).queryBuilder().where(`${id} = ?`, this.get('id')).toParam();
+            let {text, values} = store.get(storeName).queryBuilder().where(`${id} = ?`, this.get(this.constructor.key)).toParam();
             return store.get(storeName).select(text, values).then(items => { this.set(name, items); return items; });
         }
         return Promise.resolve(this.get(name));
