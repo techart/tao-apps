@@ -222,6 +222,35 @@ class FileSystem {
         return this.read(path,'readAsDataURL');
     }
 
+    static getFileList(path) {
+        return new Promise((resolve, reject) => {
+            this.fs.root.getDirectory(path, { create: false, exclusive: true },
+                function(dir) {
+                    var _reader = dir.createReader();
+                    var _entries = [];
+
+                    var _readEntries = function () {
+                        _reader.readEntries(function (results) {
+                            if (!results.length) {
+                                resolve(_entries);
+                            } else {
+                                _entries = _entries.concat(results.slice(0));
+                                _readEntries();
+                            }
+                        }, reject)
+                    };
+
+                    _readEntries();
+
+                }, reject);
+        });
+    }
+
+    static isEmpty(path) {
+        return this.getFileList(path).then((entries) => {
+            return entries.length === 0;
+        });
+    }
 }
 
 export default FileSystem;
