@@ -224,7 +224,7 @@ class FileSystem {
 
     static getFileList(path) {
         return new Promise((resolve, reject) => {
-            this.fs.root.getDirectory(path, { create: false, exclusive: true },
+            this._fs.root.getDirectory(path, { create: false, exclusive: true },
                 function(dir) {
                     var _reader = dir.createReader();
                     var _entries = [];
