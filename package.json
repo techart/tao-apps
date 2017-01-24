@@ -1,12 +1,12 @@
 {
-  "name": "tao-apps",
+  "name": "@webtechart/tao-apps",
   "version": "1.0.0",
   "description": "Frontend TAO/APPS for Cordova",
   "author": "web@techart.ru",
   "license": "ISC",
   "scripts": {
     "compile": "babel -d lib/ src/",
-    "postinstall": "npm run compile"
+    "prepublish": "npm run compile"
   },
   "dependencies": {
     "jquery": "^2.2.1",
